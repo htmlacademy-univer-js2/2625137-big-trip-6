@@ -1,13 +1,24 @@
+import Observable from '../framework/observable.js';
 import { getMockPoints } from '../mock/point-mock.js';
 
-class PointsModel {
+export default class PointsModel extends Observable {
+  #points = null;
+
   constructor() {
-    this._points = getMockPoints();
+    super();
+    this.#points = getMockPoints();
   }
 
   getPoints() {
-    return this._points;
+    return this.#points;
+  }
+
+  updatePoint(updatedPoint) {
+    const index = this.#points.findIndex((point) => point.id === updatedPoint.id);
+    if (index === -1) {
+      return;
+    }
+    this.#points[index] = updatedPoint;
+    this._notify('MINOR', updatedPoint);
   }
 }
-
-export default PointsModel;

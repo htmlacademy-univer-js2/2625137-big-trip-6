@@ -1,9 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
 const getFormattedDate = (date) => new Date(date).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' }).toUpperCase();
-
 const getTimeFromISO = (isoString) => new Date(isoString).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-
 const getDuration = () => '30M';
 
 const createPointTemplate = (point) => {
@@ -64,10 +62,11 @@ const createPointTemplate = (point) => {
 };
 
 export default class PointView extends AbstractView {
-  constructor(point, onEditClick) {
+  constructor(point, onEditClick, onFavoriteClick) {
     super();
     this.point = point;
     this._onEditClick = onEditClick;
+    this._onFavoriteClick = onFavoriteClick;
   }
 
   get template() {
@@ -75,8 +74,7 @@ export default class PointView extends AbstractView {
   }
 
   _restoreHandlers() {
-    this.element.querySelector('.event__rollup-btn')
-      .addEventListener('click', this._onEditClick);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this._onEditClick);
+    this.element.querySelector('.event__favorite-btn').addEventListener('click', this._onFavoriteClick);
   }
 }
-
