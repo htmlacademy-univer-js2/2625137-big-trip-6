@@ -95,6 +95,9 @@ export default class TripPresenter {
 
   _renderSort() {
     this.#sortComponent = new SortView(this.#currentSort, (sortType) => {
+      if (this.#currentSort === sortType) {
+        return;
+      }
       this.#currentSort = sortType;
       this._renderBoard();
     });
@@ -164,6 +167,9 @@ export default class TripPresenter {
     const filters = Object.values(FiltersPoint);
     const currentFilter = this.#filterModel.filter;
     this.#filterComponent = new FilterView(filters, currentFilter, (filterType) => {
+      if (this.#currentSort !== 'day') {
+        this.#currentSort = 'day';
+      }
       this.#filterModel.setFilter('MAJOR', filterType);
       this._renderBoard();
     });
